@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Box Explosion Animation</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            background: #fff;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            margin-bottom: 50px;
+            animation: bounce .5s ease-out forwards infinite;
+        }
+
+        .box {    
+            width: 100%;
+            height: 100%;
+            background: #3b6bf6;
+            box-shadow: 0 10px 20px rgba(46, 87, 214, 0.25);
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            border-radius: 16px;
+            align-items: center;
+            color: #fff;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .icon-wrapper {
+            animation: scaleCenter 0.3s forwards;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-width: 1.5px;
+            border-style: dashed;
+            position: absolute;
+            bottom: 0;
+            z-index: -1;
+            font-weight: 500;
+            font-size: 19px;
+        }
+
+        .icon1 {
+            left: 20px;
+            animation: explodeLeft .5s ease-out forwards;
+            animation-delay: 3.2s;
+            border-color: #3ea938;
+            color: #3ea938;
+        }
+
+        .icon2 {
+            left: 85px;
+            animation: explodeUp .5s ease-out forwards;
+            animation-delay: 0.05s;
+            animation-delay: 3.2s;
+            border-color: #2a71b8;
+            color: #2a71b8;
+        }
+
+        .icon3 {
+            left: 120px;
+            animation: explodeRight .5s ease-out forwards;
+            animation-delay: 0.05s;
+            animation-delay: 3.2s;
+            border-color: #e75583;
+            color: #e75583;
+        }
+
+        @keyframes bounce {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-5px, 2px); }
+            50% { transform: translate(5px, 2px); }
+            75% { transform: translate(-5px, 5px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        @keyframes scaleCenter {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes popBox {
+            0% {
+                transform : translate(0, 0px) rotate(12deg);
+            }
+
+            50% {
+                transform : translate(0, -20px);
+            }
+
+            100% {
+                transform : translate(0, 0px);
+            }
+        }
+
+        @keyframes explodeLeft {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(-100px, -150px) rotate(-40deg);
+            }
+        }
+
+        @keyframes explodeUp {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(0, -180px) scale(0.95);
+            }
+        }
+
+        @keyframes explodeRight {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(100px, -150px) rotate(40deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="box">
+            복합지원
+        </div>
+        <div class="icon icon1">금융</div>
+        <div class="icon icon2">고용</div>
+        <div class="icon icon3">복지</div>
+    </div>
+
+    <script>
+        // 페이지 진입 시 3초간 bounce 후 정지
+        // 2초 후 다시 애니메이션 실행
+        // 그 후 계속 해당 행동 반복
+        const box = document.querySelector('.wrapper');
+
+        const animationTimer = setTimeout(() => {
+            box.style.animation = 'bounce 0.3s forwards'
+
+            const replayAnimationTimer = setTimeout(() => {
+                console.log("2초 지남")
+            }, 2000)
+        }, 3000);
+    </script>
+
+</body>
+</html>
