@@ -69,7 +69,7 @@
             left: 85px;
             animation: explodeUp .5s ease-out forwards;
             animation-delay: 0.05s;
-            animation-delay: 3.2s;
+            animation-delay: 3.25s;
             border-color: #2a71b8;
             color: #2a71b8;
         }
@@ -78,16 +78,16 @@
             left: 120px;
             animation: explodeRight .5s ease-out forwards;
             animation-delay: 0.05s;
-            animation-delay: 3.2s;
+            animation-delay: 3.3s;
             border-color: #e75583;
             color: #e75583;
         }
 
         @keyframes bounce {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(-5px, 2px); }
-            50% { transform: translate(5px, 2px); }
-            75% { transform: translate(-5px, 5px); }
+            0% { transform: translate(0, 0) rotate(4deg); }
+            25% { transform: translate(-6px, 2px); }
+            50% { transform: translate(6px, 0px); }
+            75% { transform: translate(-2px, -2px); }
             100% { transform: translate(0, 0); }
         }
 
@@ -120,7 +120,7 @@
                 transform: translate(0, 0);
             }
             100% {
-                transform: translate(-100px, -150px) rotate(-40deg);
+                transform: translate(-100px, -200px) rotate(-40deg);
             }
         }
 
@@ -129,7 +129,7 @@
                 transform: translate(0, 0);
             }
             100% {
-                transform: translate(0, -180px) scale(0.95);
+                transform: translate(0, -220px) scale(0.95);
             }
         }
 
@@ -138,7 +138,7 @@
                 transform: translate(0, 0);
             }
             100% {
-                transform: translate(100px, -150px) rotate(40deg);
+                transform: translate(120px, -200px) rotate(40deg);
             }
         }
     </style>
