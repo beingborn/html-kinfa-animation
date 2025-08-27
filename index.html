@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Box Explosion Animation</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            background: #fff;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 200px;
+            height: 100px;
+            margin-bottom: 50px;
+            animation: popBox .3s ease-out forwards;
+        }
+
+        .box {    
+            width: 100%;
+            height: 100%;
+            background: lightsalmon;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            background: #ccc;
+            position: absolute;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .icon1 {
+            left: 20px;
+            animation: explodeLeft .5s ease-out forwards;
+        }
+
+        .icon2 {
+            left: 85px;
+            animation: explodeUp .5s ease-out forwards;
+            animation-delay: 0.1s;
+        }
+
+        .icon3 {
+            left: 150px;
+            animation: explodeRight .5s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes popBox {
+            0% {
+                transform : translate(0, 0px) rotate(5deg);
+            }
+
+            50% {
+                transform : translate(0, -30px);
+            }
+
+            100% {
+                transform : translate(0, 0px);
+            }
+        }
+
+        @keyframes explodeLeft {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(-100px, -150px) rotate(-30deg);
+            }
+        }
+
+        @keyframes explodeUp {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(0, -180px) scale(0.8);
+            }
+        }
+
+        @keyframes explodeRight {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(100px, -150px) rotate(30deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="box">
+        </div>
+        <div class="icon icon1"></div>
+        <div class="icon icon2"></div>
+        <div class="icon icon3"></div>
+    </div>
+
+    
+
+</body>
+</html>
