@@ -4,9 +4,37 @@
     <meta charset="UTF-8">
     <title>Box Explosion Animation</title>
     <style>
+    /* =========================
+        Timeline (sec) — v1 (현재 코드 기준)
+    =========================
+
+        t = 0.0s   : 페이지 로드
+
+        [1] ENTER (아이콘 진입, 각 0.5s 지속)
+        - icon1 : start 1.5s → end 2.0s
+        - icon2 : start 1.8s → end 2.3s
+        - icon3 : start 2.0s → end 2.5s
+
+        [2] BOUNCE (박스 흔들림, .wrapper 에 0.5s infinite, JS가 중단)
+        - start : 2.5s 
+        - duration : 0.5s
+        - cycle : [2.5s~3.0s], [3.0s~3.5s], [3.5s~4.0s]
+        - end : 4.0s (JS: box.style.animation = 'none')
+
+        [3] EXPLODE (아이콘 폭발, 각 0.5s 지속)
+        - icon1, icon2, icon3 : start 4.6s → end 5.1s
+    */
+
         :root {
-            --animation-delay-ratio : 0.1s;
-            --icon-first-animation-delay : 0.5s;
+            --item-duration : 0.5s;     /* 아이템 애니메이션 진행 시간 */
+            --box-duration : 0.5s;      /* 박스 애니메이션 진행 시간 */
+
+            --enter-delay : 1.5s;       /* 들어가는 모션 딜레이 */
+            --enter-item-delay : 0.3s;  /* 들어가는 모션 > 아이템 차등 들어가는 딜레이 */
+
+            --explode-delay : 4.6s;     /* 나오는 모션 딜레이 */
+
+            --box-delay : 2.5s;         /* 박스 애니메이션 딜레이 */
         }
 
         body {
@@ -23,8 +51,9 @@
             width: 200px;
             height: 100px;
             margin-bottom: 50px;
-            animation: bounce .5s ease-out forwards infinite;
-            animation-delay: 2.5s;
+            animation: bounce var(--box-duration) ease-out forwards;
+            animation-iteration-count: 3;
+            animation-delay: var(--box-delay);
         }
 
         .box {    
@@ -51,7 +80,7 @@
             z-index: -1;
         }
 
-        .icon {
+        .icon-inner > [class^="icon"] {
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -62,10 +91,7 @@
             border-style: dashed;
             font-weight: 500;
             font-size: 19px;
-        }
-
-        [class^="icon"] {
-            animation-duration: 0.5s;
+            animation-duration: var(--item-duration);
             animation-timing-function: ease-in-out;
             animation-fill-mode: forwards;
         }
@@ -73,7 +99,7 @@
         .icon1 {
             animation-name: enterLeft, explodeLeft; 
             transform: translate(-160px, -200px) rotate(-40deg);            
-            animation-delay: 1.5s, 4.6s;
+            animation-delay: var(--enter-delay), var(--explode-delay);
             border-color: #3ea938;
             color: #3ea938;
         }
@@ -81,7 +107,7 @@
         .icon2 {
             transform: translate(0, -220px);
             animation-name: enterMiddle, explodeMiddle;            
-            animation-delay: 1.8s, 4.6s;
+            animation-delay: calc(var(--enter-delay) + var(--enter-item-delay)), var(--explode-delay);
             border-color: #2a71b8;
             color: #2a71b8;
         }
@@ -89,7 +115,7 @@
         .icon3 {
             transform: translate(160px, -200px) rotate(40deg);
             animation-name: enterRight, explodeRight;            
-            animation-delay: 2s, 4.6s;
+            animation-delay: calc(var(--enter-delay) + var(--enter-item-delay) * 2), var(--explode-delay);
             border-color: #e75583;
             color: #e75583;
         }
@@ -160,31 +186,27 @@
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper animation">
         <div class="box">
             복합지원
         </div>
         <div class="icon-wrapper">
             <div class="icon-inner">
-                <div class="icon icon1">금융</div>
+                <div class="icon1">금융</div>
             </div>
             <div class="icon-inner">
-                <div class="icon icon2">고용</div>
+                <div class="icon2">고용</div>
             </div>
             <div class="icon-inner">
-                <div class="icon icon3">복지</div>
+                <div class="icon3">복지</div>
             </div>
         </div>
     </div>
-
     <script>
-        // 페이지 진입 시 3초간 bounce 후 정지
-        // 2초 후 다시 애니메이션 실행
-        // 그 후 계속 해당 행동 반복
         const box = document.querySelector('.wrapper');
 
         const animationTimer = setTimeout(() => {
-            box.style.animation = 'none'
+            // box.style.animation = 'none'
             console.log("2초 끝!")
 
             const replayAnimationTimer = setTimeout(() => {
@@ -192,6 +214,5 @@
             }, 2000)
         }, 4000);
     </script>
-
 </body>
 </html>
