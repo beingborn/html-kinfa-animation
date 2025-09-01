@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Box Explosion Animation</title>
     <style>
+        :root {
+            --animation-delay-ratio : 0.1s;
+            --icon-first-animation-delay : 0.5s;
+        }
+
         body {
             margin: 0;
             height: 100vh;
@@ -19,6 +24,7 @@
             height: 100px;
             margin-bottom: 50px;
             animation: bounce .5s ease-out forwards infinite;
+            animation-delay: 2s;
         }
 
         .box {    
@@ -34,11 +40,17 @@
             align-items: center;
             color: #fff;
             position: absolute;
-            z-index: 10;
+            overflow: visible;
         }
 
         .icon-wrapper {
-            animation: scaleCenter 0.3s forwards;
+            display: flex; 
+            align-items: center; 
+            position : absolute;
+            bottom : 0;
+            left : 50%;
+            transform: translateX(-50%);
+            z-index: -1;
         }
 
         .icon {
@@ -50,35 +62,36 @@
             align-items: center;
             border-width: 1.5px;
             border-style: dashed;
-            position: absolute;
-            bottom: 0;
-            z-index: -1;
             font-weight: 500;
             font-size: 19px;
         }
 
+        [class^="icon"] {
+            animation-duration: 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+        }
+
         .icon1 {
-            left: 20px;
-            animation: explodeLeft .5s ease-out forwards;
-            animation-delay: 3.2s;
+            animation-name: enterLeft, explodeLeft; 
+            transform: translate(-100px, -200px) rotate(-40deg);            
+            animation-delay: 1.5s, 4.5s;
             border-color: #3ea938;
             color: #3ea938;
         }
 
         .icon2 {
-            left: 85px;
-            animation: explodeUp .5s ease-out forwards;
-            animation-delay: 0.05s;
-            animation-delay: 3.25s;
+            transform: translate(0, -220px);
+            animation-name: enterMiddle, explodeMiddle;            
+            animation-delay: 1.6s, 4.6s;
             border-color: #2a71b8;
             color: #2a71b8;
         }
 
         .icon3 {
-            left: 120px;
-            animation: explodeRight .5s ease-out forwards;
-            animation-delay: 0.05s;
-            animation-delay: 3.3s;
+            transform: translate(100px, -200px) rotate(40deg);
+            animation-name: enterRight, explodeRight;            
+            animation-delay: 1.7s, 4.7s;
             border-color: #e75583;
             color: #e75583;
         }
@@ -115,21 +128,50 @@
             }
         }
 
+        @keyframes enterLeft {
+            0% {
+                transform: translate(-100px, -200px) rotate(-40deg);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
         @keyframes explodeLeft {
             0% {
                 transform: translate(0, 0);
             }
+
             100% {
                 transform: translate(-100px, -200px) rotate(-40deg);
             }
         }
 
-        @keyframes explodeUp {
+        @keyframes enterMiddle {
+            0% {
+                transform: translate(0, -220px);
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes explodeMiddle {
             0% {
                 transform: translate(0, 0);
             }
             100% {
-                transform: translate(0, -220px) scale(0.95);
+                transform: translate(0, -220px);
+            }
+        }
+
+        @keyframes enterRight {
+            0% {
+                transform: translate(100px, -200px) rotate(40deg);
+            }
+            100% {
+                transform: translate(0, 0);
             }
         }
 
@@ -138,7 +180,7 @@
                 transform: translate(0, 0);
             }
             100% {
-                transform: translate(120px, -200px) rotate(40deg);
+                transform: translate(100px, -200px) rotate(40deg);
             }
         }
     </style>
@@ -148,9 +190,12 @@
         <div class="box">
             복합지원
         </div>
-        <div class="icon icon1">금융</div>
-        <div class="icon icon2">고용</div>
-        <div class="icon icon3">복지</div>
+        <div class="icon-wrapper">
+            <div class="icon icon1">금융</div>
+            <div class="icon icon2">고용</div>
+            <div class="icon icon3">복지</div>
+        </div>
+
     </div>
 
     <script>
@@ -160,12 +205,13 @@
         const box = document.querySelector('.wrapper');
 
         const animationTimer = setTimeout(() => {
-            box.style.animation = 'bounce 0.3s forwards'
+            box.style.animation = 'none'
+            console.log("2초 끝!")
 
             const replayAnimationTimer = setTimeout(() => {
                 console.log("2초 지남")
             }, 2000)
-        }, 3000);
+        }, 4000);
     </script>
 
 </body>
