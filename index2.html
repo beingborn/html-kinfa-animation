@@ -15,24 +15,29 @@
         - icon2 : start 1.8s → end 2.3s
         - icon3 : start 2.0s → end 2.5s
 
-        [2] BOUNCE (박스 흔들림, .wrapper 에 0.5s infinite, JS가 중단)
+        [2] CLOSED BOX (박스 닫기)
+        - start : 2.5s
+        - duration : 0.5s
+        - end : 3.0s
+
+        [3] BOUNCE (박스 흔들림, .wrapper 에 0.5s infinite, 3번 실행 후 중단)
         - start : 2.5s 
         - duration : 0.5s
         - cycle : [2.5s~3.0s], [3.0s~3.5s], [3.5s~4.0s]
         - end : 4.0s (JS: box.style.animation = 'none')
 
-        [3] EXPLODE (아이콘 폭발, 각 0.5s 지속)
+        [4] EXPLODE (아이콘 폭발, 각 0.5s 지속)
         - icon1, icon2, icon3 : start 4.6s → end 5.1s
     */
 
         :root {
             --item-duration : 0.5s;     /* 아이템 애니메이션 진행 시간 */
-            --box-duration : 0.5s;      /* 박스 애니메이션 진행 시간 */
+            --box-duration : 1s;      /* 박스 애니메이션 진행 시간 */
 
             --enter-delay : 1.5s;       /* 들어가는 모션 딜레이 */
             --enter-item-delay : 0.3s;  /* 들어가는 모션 > 아이템 차등 들어가는 딜레이 */
 
-            --explode-delay : 4.6s;     /* 나오는 모션 딜레이 */
+            --explode-delay : 5.5s;     /* 나오는 모션 딜레이 */
 
             --box-delay : 2.5s;         /* 박스 애니메이션 딜레이 */
         }
@@ -47,172 +52,181 @@
         }
 
         .wrapper {
-            position: relative;
-            width: 200px;
-            height: 100px;
-            margin-bottom: 50px;
+            position: relative;   
+        }
+
+        .fire-cracker {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation-name: explodeFire;
+            animation-delay: var(--explode-delay);
+            animation-duration: 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+        }
+
+        .character {
+            width: 323px;
+            height: 540px;
             animation: bounce var(--box-duration) ease-out forwards;
             animation-iteration-count: 3;
             animation-delay: var(--box-delay);
         }
 
-        .box {    
-            width: 100%;
-            height: 100%;
-            background: #3b6bf6;
-            box-shadow: 0 10px 20px rgba(46, 87, 214, 0.25);
-            font-size: 22px;
-            font-weight: 700;
-            display: flex;
-            justify-content: center;
-            border-radius: 16px;
-            align-items: center;
-            color: #fff;
-            position: absolute;
-            overflow: visible;
-        }
-
         .icon-inner {
             position : absolute;
-            bottom : 0;
+            bottom : -20px;
             left : 50%;
             transform: translateX(-50%);
             z-index: -1;
         }
 
         .icon-inner > [class^="icon"] {
-            width: 60px;
-            height: 60px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             display: flex;
+            fill: #fff;
+            flex-direction: column;
+            gap: 8px;
             justify-content: center;
             align-items: center;
-            border-width: 1.5px;
-            border-style: dashed;
             font-weight: 500;
-            font-size: 19px;
+            font-size: 30px;
             animation-duration: var(--item-duration);
             animation-timing-function: ease-in-out;
             animation-fill-mode: forwards;
         }
 
+        /* 아이콘 > 금융 */
         .icon1 {
             animation-name: enterLeft, explodeLeft; 
-            transform: translate(-160px, -200px) rotate(-40deg);            
+            transform: translate(-240px, -520px);            
             animation-delay: var(--enter-delay), var(--explode-delay);
-            border-color: #3ea938;
-            color: #3ea938;
+            color : #da3b64;
+            box-shadow: 0 0 35px 0 rgba(255, 0, 0, 0.25) inset;
         }
 
+        /* 아이콘 > 고용 */
         .icon2 {
-            transform: translate(0, -220px);
+            transform: translate(0, -600px);
             animation-name: enterMiddle, explodeMiddle;            
             animation-delay: calc(var(--enter-delay) + var(--enter-item-delay)), var(--explode-delay);
-            border-color: #2a71b8;
-            color: #2a71b8;
+            color : #a25c04;
+            box-shadow: 0 0 35px 0 rgba(255, 149, 0, 0.25)inset;
         }
 
+        /* 아이콘 > 복지 */
         .icon3 {
-            transform: translate(160px, -200px) rotate(40deg);
+            transform: translate(240px, -520px);
             animation-name: enterRight, explodeRight;            
             animation-delay: calc(var(--enter-delay) + var(--enter-item-delay) * 2), var(--explode-delay);
-            border-color: #e75583;
-            color: #e75583;
+            color : #4134dd;
+            box-shadow: 0 0 35px 0 rgba(85, 0, 255, 0.25) inset;
         }
 
+        /* 캐릭터 바운스 */
         @keyframes bounce {
-            0% { transform: translate(0, 0) rotate(2deg); }
-            25% { transform: translate(-6px, 0px); }
-            50% { transform: translate(6px, 0px); }
-            75% { transform: translate(-2px, 0px); }
-            100% { transform: translate(0, 0); }
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-30px) rotate(2deg);}
+            60% {transform: translateY(-15px) rotate(-2deg);}
         }
-
-        @keyframes enterLeft {
+        
+        /* 폭죽 */
+        @keyframes explodeFire {
             0% {
-                transform: translate(-160px, -200px) rotate(-40deg);
+                transform: translate(-50%, -50%) scale(0);
             }
 
             100% {
-                transform: translate(0, 0);
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        /* 아이콘 */
+        @keyframes enterLeft {
+            0% {
+                transform: translate(-240px, -520px) scale(1);
+            }
+
+            100% {
+                transform: translate(0, -20px) scale(0);
             }
         }
 
         @keyframes explodeLeft {
             0% {
-                transform: translate(0, 0);
+                transform: translate(0, -20px) scale(0);
             }
 
             100% {
-                transform: translate(-160px, -200px) rotate(-40deg);
+                transform: translate(-240px, -520px) scale(1);
             }
         }
 
         @keyframes enterMiddle {
             0% {
-                transform: translate(0, -220px);
+                transform: translate(0, -600px) scale(1);
             }
             100% {
-                transform: translate(0, 0);
+                transform: translate(0, -20px) scale(0);
             }
         }
 
         @keyframes explodeMiddle {
             0% {
-                transform: translate(0, 0);
+                transform: translate(0, -20px) scale(0);
             }
             100% {
-                transform: translate(0, -220px);
+                transform: translate(0, -600px) scale(1);
             }
         }
 
         @keyframes enterRight {
             0% {
-                transform: translate(160px, -200px) rotate(40deg);
+                transform: translate(240px, -520px) scale(1);
             }
             100% {
-                transform: translate(0, 0);
+                transform: translate(0, 0) scale(0);
             }
         }
 
         @keyframes explodeRight {
             0% {
-                transform: translate(0, 0);
+                transform: translate(0, 0px) scale(0);
             }
             100% {
-                transform: translate(160px, -200px) rotate(40deg);
+                transform: translate(240px, -520px) scale(1);
             }
         }
     </style>
 </head>
 <body>
-    <div class="wrapper animation">
-        <div class="box">
-            복합지원
-        </div>
+    <div class="wrapper">
+        <img class="fire-cracker" src="./firecracker.png" alt="폭죽">
+        <img class="character" src="./character.png" alt="포용이">
         <div class="icon-wrapper">
             <div class="icon-inner">
-                <div class="icon1">금융</div>
+                <div class="icon1">
+                    <img src="./ico_finance.png" alt="금융" width="70" height="60">
+                    금융
+                </div>
             </div>
             <div class="icon-inner">
-                <div class="icon2">고용</div>
+                <div class="icon2">
+                    <img src="./ico_employment.png" alt="고용" width="70" height="60">
+                    고용
+                </div>
             </div>
             <div class="icon-inner">
-                <div class="icon3">복지</div>
+                <div class="icon3">
+                    <img src="./ico_welfare.png" alt="복지" width="70" height="60">
+                    복지
+                </div>
             </div>
         </div>
     </div>
-    <script>
-        const box = document.querySelector('.wrapper');
-
-        const animationTimer = setTimeout(() => {
-            // box.style.animation = 'none'
-            console.log("2초 끝!")
-
-            const replayAnimationTimer = setTimeout(() => {
-                console.log("2초 지남")
-            }, 2000)
-        }, 4000);
-    </script>
 </body>
 </html>
