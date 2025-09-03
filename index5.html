@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Box Explosion Animation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <style>
     /* =========================
         Timeline (sec) — v1 (현재 코드 기준)
@@ -55,6 +58,10 @@
             margin: 0;
             height: 100vh;
             background: #fff;
+            
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
         }
 
         .wrapper {
@@ -64,11 +71,20 @@
         .character {
             width: 323px;
             height: 540px;
+
+            animation-duration: 0.8s, 0.3s;
+            animation-timing-function: ease-out, ease-out;
+            animation-delay: 1s, calc(var(--explode-delay));
+            animation-iteration-count: 4, 1;
+            animation-fill-mode: forwards, forwards;
+
+            /*
             animation-duration: 0.5s, 0.5s;
             animation-timing-function: ease, ease-in-out;
             animation-delay: var(--character-delay1), var(--character-delay2);
             animation-iteration-count: 2, 2;
             animation-fill-mode: forwards, forwards;
+            */
         }
 
         .fire-cracker {
@@ -139,7 +155,7 @@
 
         /* Animation Run */
         .run .character {
-            animation-name: bounce, bounce;
+            animation-name: bounce, explodeCharacter;
         }
 
         .run .fire-cracker {
@@ -160,12 +176,22 @@
 
         /* 캐릭터 바운스 */
         @keyframes bounce {
-            0%, 20%, 50%, 80% {transform: translateY(0) scale(0.95);}
+            /* 0%, 20%, 50%, 80% {transform: translateY(0) scale(0.95);}
             40% {transform: translateY(-30px)}
             60% {transform: translateY(-15px)}
             100% {transform: translateY(0) scale(1);}
+            */
+
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
+            100% { transform: translateY(0px); }
         }
-        
+
+        @keyframes explodeCharacter {
+            0% { transform: scale(0.9) rotate(1deg)}
+            100% { transform: scale(1)}
+        }
+
         /* 폭죽 */
         @keyframes explodeFire {
             0% {
