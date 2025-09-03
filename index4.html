@@ -11,25 +11,25 @@
         t = 0.0s   : 페이지 로드
 
         [1] BOUNCE 
-        - start : 0s
-        - duration : 0.7s
+        - start : 1.5s
+        - duration : 0.5s
         - iteration : 2
-        - end : 1.4s
+        - end : 2.5s
 
         [2] ENTER (아이콘 캐릭터 진입 진입, 각 0.5s 지속)
-        - icon1 : start 1.5s → end 2.0s
-        - icon2 : start 1.8s → end 2.3s
-        - icon3 : start 2.1s → end 2.6s
+        - icon1 : start 3s → end 3.5s
+        - icon2 : start 3.3s → end 3.8s
+        - icon3 : start 3.8s → end 4.3s
 
         [3] BOUNCE
-        - start : 2.9s 
-        - duration : 0.7s
+        - start : 4.5s 
+        - duration : 0.5s
         - iteration : 2
-        - end : 4.3s
+        - end : 5.5s
 
         [4] EXPLODE 
-        - icon1, icon2, icon3 : start 5s → end 5s
-        - firecracker : start 4.5s -> 5s
+        - icon1, icon2, icon3 : start 5.5s → end 6s
+        - firecracker : start 5.5s -> 6s
 
         [5] REPLAY 
         - start : Every 6.5 seconds
@@ -38,10 +38,11 @@
         :root {
             --item-duration : 0.5s;     /* 아이템 애니메이션 진행 시간 */
             --box-duration : 1s;      /* 박스 애니메이션 진행 시간 */
-            --enter-delay : 1.5s;       /* 들어가는 모션 딜레이 */
+
+            --enter-delay : 3s;       /* 들어가는 모션 딜레이 */
             --enter-item-delay : 0.3s;  /* 들어가는 모션 > 아이템 차등 들어가는 딜레이 */
-            --explode-delay : 4.5s;     /* 나오는 모션 딜레이 */
-            --character-delay1 : 0s;
+            --explode-delay : 6s;     /* 나오는 모션 딜레이 */
+            --character-delay1 : 1.5s;
             --character-delay2 : calc(var(--explode-delay) - 1.5s);
         }
 
@@ -78,7 +79,7 @@
 
             animation-delay: var(--explode-delay);
             animation-fill-mode: forwards;
-            transform: translate(-50%, -50%) scale(0);
+            transform: translate(-50%, -50%) scale(1.2);
         }
 
         /* 아이콘 */
@@ -158,9 +159,10 @@
 
         /* 캐릭터 바운스 */
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0) scale(0.95);}
+            0%, 20%, 50%, 80% {transform: translateY(0) scale(0.95);}
             40% {transform: translateY(-30px) rotate(2deg);}
             60% {transform: translateY(-15px) rotate(-2deg);}
+            100% {transform: translateY(0) scale(1);}
         }
         
         /* 폭죽 */
@@ -277,7 +279,8 @@
 
         playOnce();
 
-        setInterval(playOnce, 6500) /* 6.5초마다 반복 */
+        /* 6.5초마다 반복 */
+        /* setInterval(playOnce, 6500) */ 
     </script>
 </body>
 </html>
