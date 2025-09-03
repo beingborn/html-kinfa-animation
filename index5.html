@@ -39,9 +39,7 @@
     */
 
         :root {
-            --mobile-viewport : 999px;
-
-            --item-duration : 0.5s;     /* 아이템 애니메이션 진행 시간 */
+            --item-duration : 0.5s;    /* 아이템 애니메이션 진행 시간 */
             --box-duration : 1s;      /* 박스 애니메이션 진행 시간 */
 
             --enter-delay : 3s;       /* 들어가는 모션 딜레이 */
@@ -97,6 +95,12 @@
             animation-timing-function: ease-in-out;
             animation-delay: var(--explode-delay);
             animation-fill-mode: forwards;
+
+            /* 
+                무한 반복일 시 Scale이 0으로 한번 초기화되어서 폭죽이 사라지는 현상 있음.
+                변경 원할 시 폭죽이 터지고 자연스럽게 사라지는 애니메이션이 추가되어야 할 듯함
+            */
+
             transform: translate(-50%, -50%) scale(0);
         }
 
@@ -262,7 +266,6 @@
             }
         }
 
-        /* Media Query (Vw) */
         @media (max-width : 999px) {
             :root {
                 --item-explode-middle-y: calc(-680 / 999 * 100vw);
@@ -279,12 +282,18 @@
             .icon-inner > [class^="icon"] {
                 width: calc(180 / 999 * 100vw);
                 height: calc(180 / 999 * 100vw);
-                font-size: calc(30 / var(--viewport) * 100vw);
+                min-width: 60px;
+                min-height: 60px;
+
+                /* 1. 최솟값 */
+                font-size: max(13px, calc((30 / 999) * 100vw)); 
             }
 
             .icon-inner img {
                 width: calc(70 / 999 * 100vw);
                 height : calc(60 / 999 * 100vw);
+                min-width: 30px;
+                min-height: 26px;
             }
 
             .fire-cracker {
@@ -332,15 +341,16 @@
         function playOnce() {
             animationRoot.classList.remove('run');
 
-            void animationRoot.offsetWidth; /* Reflow 강제 */
+            /* Reflow 강제 > DOM 인식 */
+            void animationRoot.offsetWidth; 
 
-            animationRoot.classList.add('run')
+            animationRoot.classList.add('run');
         }
 
         playOnce();
 
         /* 6.5초마다 반복 */
-        /* setInterval(playOnce, 6500) */ 
+        setInterval(playOnce, 6500); 
     </script>
 </body>
 </html>
