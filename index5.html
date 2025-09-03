@@ -49,6 +49,13 @@
             --explode-delay : 6s;     /* 나오는 모션 딜레이 */
             --character-delay1 : 1.5s;
             --character-delay2 : calc(var(--explode-delay) - 1.5s);
+
+            --item-explode-left-x : -240px;
+            --item-explode-right-x : 240px;
+
+            --item-explode-side-y : -560px;
+
+            --item-explode-middle-y : -680px;
         }
 
         body {
@@ -102,6 +109,11 @@
             transform: translateX(-50%);
         }
 
+        .icon-inner img {
+            width: 70px;
+            height: 60px;
+        }
+
         .icon-inner > [class^="icon"] {
             display: flex;
             gap: 8px;
@@ -126,7 +138,7 @@
             color : #da3b64;
 
             animation-delay: var(--enter-delay), var(--explode-delay);
-            transform: translate(-240px, -560px);
+            transform: translate(var(--item-explode-left-x), var(--item-explode-side-y));
         }
 
         /* 아이콘 > 고용 */
@@ -135,7 +147,7 @@
             color : #a25c04;
 
             animation-delay: calc(var(--enter-delay) + var(--enter-item-delay)), var(--explode-delay);
-            transform: translate(0, -680px);
+            transform: translate(0, var(--item-explode-middle-y));
         }
 
         /* 아이콘 > 복지 */
@@ -144,7 +156,7 @@
             color : #4134dd;
 
             animation-delay: calc(var(--enter-delay) + var(--enter-item-delay) * 2), var(--explode-delay);
-            transform: translate(240px, -560px);
+            transform: translate(var(--item-explode-right-x), var(--item-explode-side-y));
         }
 
         /* Animation Run */
@@ -196,7 +208,7 @@
         /* 아이콘 */
         @keyframes enterLeft {
             0% {
-                transform: translate(-240px, -560px) scale(1);
+                transform: translate(var(--item-explode-left-x), var(--item-explode-side-y)) scale(1);
             }
 
             100% {
@@ -210,13 +222,13 @@
             }
 
             100% {
-                transform: translate(-240px, -560px) scale(1);
+                transform: translate(var(--item-explode-left-x), var(--item-explode-side-y)) scale(1);
             }
         }
 
         @keyframes enterMiddle {
             0% {
-                transform: translate(0, -680px) scale(1);
+                transform: translate(0, var(--item-explode-middle-y)) scale(1);
             }
             100% {
                 transform: translate(0, -20px) scale(0);
@@ -228,13 +240,13 @@
                 transform: translate(0, -20px) scale(0);
             }
             100% {
-                transform: translate(0, -680px) scale(1);
+                transform: translate(0, var(--item-explode-middle-y)) scale(1);
             }
         }
 
         @keyframes enterRight {
             0% {
-                transform: translate(240px, -560px) scale(1);
+                transform: translate(var(--item-explode-right-x), var(--item-explode-side-y)) scale(1);
             }
             100% {
                 transform: translate(0, 0) scale(0);
@@ -246,12 +258,19 @@
                 transform: translate(0, 0px) scale(0);
             }
             100% {
-                transform: translate(240px, -560px) scale(1);
+                transform: translate(var(--item-explode-right-x), var(--item-explode-side-y)) scale(1);
             }
         }
 
         /* Media Query (Vw) */
         @media (max-width : 999px) {
+            :root {
+                --item-explode-middle-y: calc(-680 / 999 * 100vw);
+                --item-explode-side-y: calc(-560 / 999 * 100vw);
+                --item-explode-left-x : calc(-240 / 999 * 100vw);
+                --item-explode-right-x : calc(240 / 999 * 100vw);
+            }
+
             .character {
                 width: calc(323 / 999 * 100vw);  
                 height: calc(540 / 999 * 100vw); 
@@ -261,6 +280,11 @@
                 width: calc(180 / 999 * 100vw);
                 height: calc(180 / 999 * 100vw);
                 font-size: calc(30 / var(--viewport) * 100vw);
+            }
+
+            .icon-inner img {
+                width: calc(70 / 999 * 100vw);
+                height : calc(60 / 999 * 100vw);
             }
 
             .fire-cracker {
@@ -277,19 +301,19 @@
         <div class="icon-wrapper">
             <div class="icon-inner">
                 <div class="icon1">
-                    <img src="./ico_finance.png" alt="금융" width="70" height="60">
+                    <img src="./ico_finance.png" alt="금융">
                     금융
                 </div>
             </div>
             <div class="icon-inner">
                 <div class="icon2">
-                    <img src="./ico_employment.png" alt="고용" width="70" height="60">
+                    <img src="./ico_employment.png" alt="고용">
                     고용
                 </div>
             </div>
             <div class="icon-inner">
                 <div class="icon3">
-                    <img src="./ico_welfare.png" alt="복지" width="70" height="60">
+                    <img src="./ico_welfare.png" alt="복지">
                     복지
                 </div>
             </div>
