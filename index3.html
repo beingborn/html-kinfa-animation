@@ -32,7 +32,7 @@
         - firecracker : start 4.5s -> 5s
 
         [5] REPLAY 
-        - start : Every 5 seconds
+        - start : Every 6.5 seconds
     */
 
         :root {
@@ -44,11 +44,11 @@
         }
 
         body {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
             margin: 0;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
             background: #fff;
         }
 
@@ -59,24 +59,24 @@
         .character {
             width: 323px;
             height: 540px;
-            animation-name: bounce, bounce;
+
             animation-duration: 0.7s, 0.7s;
-            animation-iteration-count: 2, 2;
-            animation-delay: 0s, calc(var(--explode-delay) - 1.5s);
             animation-timing-function: ease, ease-in-out;
+            animation-delay: 0s, calc(var(--explode-delay) - 1.5s);
+            animation-iteration-count: 2, 2;
             animation-fill-mode: forwards, forwards;
         }
 
         .fire-cracker {
             position: absolute;
-            left: 50%;
             top: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            animation-name: explodeFire;
-            animation-delay: var(--explode-delay);
+            left: 50%;
             animation-duration: 0.5s;
             animation-timing-function: ease-in-out;
+
+            animation-delay: var(--explode-delay);
             animation-fill-mode: forwards;
+            transform: translate(-50%, -50%) scale(0);
         }
 
         /* 아이콘 */
@@ -84,56 +84,75 @@
             position : absolute;
             bottom : -20px;
             left : 50%;
-            transform: translateX(-50%);
             z-index: -1;
+            transform: translateX(-50%);
         }
 
         .icon-inner > [class^="icon"] {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
             width: 180px;
             height: 180px;
-            border-radius: 50%;
-            display: flex;
-            fill: #fff;
-            flex-direction: column;
-            gap: 8px;
-            justify-content: center;
-            align-items: center;
-            font-weight: 500;
             font-size: 30px;
+            font-weight: 500;
+
             animation-duration: var(--item-duration);
             animation-timing-function: ease-in-out;
             animation-fill-mode: forwards;
+            border-radius: 50%;
+            background-color: #fff;
         }
 
         /* 아이콘 > 금융 */
         .icon1 {
-            animation-name: enterLeft, explodeLeft; 
-            transform: translate(-240px, -560px);            
-            animation-delay: var(--enter-delay), var(--explode-delay);
+            box-shadow: 0 0 35px 0 rgba(255, 0, 0, 0.25) inset;            
             color : #da3b64;
-            box-shadow: 0 0 35px 0 rgba(255, 0, 0, 0.25) inset;
+
+            animation-delay: var(--enter-delay), var(--explode-delay);
+            transform: translate(-240px, -560px);
         }
 
         /* 아이콘 > 고용 */
         .icon2 {
-            transform: translate(0, -680px);
-            animation-name: enterMiddle, explodeMiddle;            
-            animation-delay: calc(var(--enter-delay) + var(--enter-item-delay)), var(--explode-delay);
-            color : #a25c04;
             box-shadow: 0 0 35px 0 rgba(255, 149, 0, 0.25)inset;
+            color : #a25c04;
+
+            animation-delay: calc(var(--enter-delay) + var(--enter-item-delay)), var(--explode-delay);
+            transform: translate(0, -680px);
         }
 
         /* 아이콘 > 복지 */
         .icon3 {
-            transform: translate(240px, -560px);
-            animation-name: enterRight, explodeRight;            
-            animation-delay: calc(var(--enter-delay) + var(--enter-item-delay) * 2), var(--explode-delay);
-            color : #4134dd;
             box-shadow: 0 0 35px 0 rgba(85, 0, 255, 0.25) inset;
+            color : #4134dd;
+
+            animation-delay: calc(var(--enter-delay) + var(--enter-item-delay) * 2), var(--explode-delay);
+            transform: translate(240px, -560px);
         }
 
         /* Animation Run */
+        .run .character {
+            animation-name: bounce, bounce;
+        }
 
+        .run .fire-cracker {
+            animation-name: explodeFire;
+        }
+
+        .run .icon1 {
+            animation-name: enterLeft, explodeLeft; 
+        }
+        
+        .run .icon2 {
+            animation-name: enterMiddle, explodeMiddle;            
+        }
+
+        .run .icon3 {
+            animation-name: enterRight, explodeRight;            
+        }
 
         /* 캐릭터 바운스 */
         @keyframes bounce {
@@ -212,7 +231,7 @@
     </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper run">
         <img class="fire-cracker" src="./firecracker.png" alt="폭죽">
         <img class="character" src="./character.png" alt="포용이">
         <div class="icon-wrapper">
@@ -236,5 +255,27 @@
             </div>
         </div>
     </div>
+
+    <script>
+        /*
+            1. 진입 시 run Class 
+            2. Reflow (DOM 스타일) 다시 읽기 (메모리 : 애니메이션 없음 인식)
+            3. run class 부착 (애니메이션 재실행)
+        */
+
+        const animationRoot = document.querySelector('.wrapper');
+
+        function playOnce() {
+            animationRoot.classList.remove('run');
+
+            void animationRoot.offsetWidth; /* Reflow 강제 */
+
+            animationRoot.classList.add('run')
+        }
+
+        playOnce();
+
+        setInterval(playOnce, 6500) /* 6.5초마다 반복 */
+    </script>
 </body>
 </html>
