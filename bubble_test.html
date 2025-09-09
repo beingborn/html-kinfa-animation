@@ -8,22 +8,86 @@
 </head>
 
 <style>
+    body {
+        margin: 0;
+    }
+
     #canvas {
-        width: 200px;
-        height: 300px;
-        margin: 0 auto;
+        padding-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow-y: hidden;
         position: relative;
-        background-color: aliceblue;
+        background : url(./images/rwd_background.jpg) no-repeat center / cover;
+    }
+
+    .rwd-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 16px;
+        height: 48px;
+        background-color: #fff;
+        opacity: 0.5;
+    }
+
+    .rwd-container {
+        flex-grow: 1;
+        margin: 0 16px;
+        align-content: end;
+    }
+
+    .rwd-footer {
+        margin-bottom: 20px;
+        margin-left: 16px;
+        margin-right: 16px;
+        height: 163px;
+        background-color: #fff;
+        border-radius: 20px;
+    }
+
+    .tree-img-wrapper {
+        text-align: center;
+        position: relative;
+        padding-bottom: 36px;
+        margin-bottom: 12px;
+        max-width: 335px;
+    }
+
+    .tree-img-wrapper .tree {
+        margin: 0 auto;
+    }
+
+    .tree-img-wrapper .character {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+
+    .tree-img-wrapper .sign {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    #bubble-wrap {
+        position: absolute;
+        left: 20px;
+        top: 120px;
+        width: 100%;
+        height: 100%;
     }
 
     .bubble {
+        max-width: 200px;
         padding: 12px;
         opacity: 0;
         transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        position: absolute;
         border-radius: 4px;
         position: relative;
-        background: #ffb3b3;
+        background: #fff;
+        box-shadow: 0 4px 20px rgba(0, 0 ,0, 0.1);
     }
 
     .bubble::after {
@@ -34,93 +98,100 @@
         width: 0;
         height: 0;
         border: 20px solid transparent;
-        border-left-color: #ffb3b3;
+        border-left-color: #fff;
+        
         border-right: 0;
         border-bottom: 0;
         margin-top: -10px;
         margin-right: -20px;
     }
 
-    .bubble:nth-child(1) {
-        left: 20px;
-        top: 20px;
-    }
-
-    .bubble:nth-child(2) {
-        left: 40px;
-        top: 40px;
-    }
-
-    .bubble:nth-child(3) {
-        left: 60px;
-        top: 60px;
-    }
-
-    .bubble:nth-child(4) {
-        left: 20px;
-        top: 200px;
-    }
-
-    .bubble:nth-child(5) {
-        right: 20px;
-        top: 200px;
-    }
-
-    .bubble:nth-child(6) {
-        right: 20px;
-        top: 240px;
-    }
-
     .bubble.show {
         opacity: 1;
     }
+
 </style>
 
 <body>
     <div id="canvas">
-        <div id="bubble-wrap">
-            <div class="bubble show"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
+        <div class="rwd-header">
+            Reward Header
+        </div>
+        <div class="rwd-container">
+            <div class="tree-img-wrapper">
+                <img src="./images/rwd_character.png" class="character" alt="포용이">
+                <img src="./images/rwd_tree_lv5.png" class="tree" alt="나무">
+                <img src="./images/rwd_sign.png" class="sign" alt="팻말">
+            </div>
+            <div id="bubble-wrap">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+            </div>
+        </div>
+        <div class="rwd-footer">
+            <p>행복에너지 70%</p>
+            <progress value="50" min="0" max="100"></progress>
+            <div>
+                <button>출석체크</button>
+                <button>잇다 조회하기</button>
+                <button>오늘의 행운뽑기</button>
+                <button>오늘의 퀴즈</button>
+                <button>이벤트 참여</button>
+            </div>
         </div>
     </div>
 
     <script>
         const response = [
-            '즐거운 하루',
-            '하루하루',
-            '빅뱅뱅',
-            '4번째 메시지',
-            '5번째 메세지',
-            '6번째째 메세지'
+            '즐거운 하루 되세요!',
+            '하루하루가 힘들어요',
+            '어쩔 수 없지 할 수 있어!',
+            '돈내고 먹으세요',
+            '시계 약을 갈아야해',
+            '컴퓨터의 3가지 종류'
         ]
 
         $(document).ready(function(){
-            /* Data Fetching */
             response.forEach((message, index) => {
                 $('#bubble-wrap .bubble').eq(index).text(message);
             })
+
+            let prevIndex = 0;
+            let randomIndex = 0;
+
+            function showRandomBubble() {
+                // 랜덤 수 뽑기
+                randomIndex = Math.floor(Math.random() * $('.bubble').length);
+
+                // 같은 값이 나온다면 + 1로 우회하기
+                if (prevIndex === randomIndex) {
+                    randomIndex + 1;
+                }
+
+                // bubble 중에 해당 랜덤 index 애니메이션 적용
+                $('.bubble').eq(randomIndex).addClass('show');
+
+                // 적용 값으로 할당
+                prevIndex = randomIndex;
+
+                // 2초 후 액티브 된 애니메이션 해제
+                setTimeout(() => {
+                    $('.bubble').eq(randomIndex).removeClass('show');
+                }, 2000)
+            }
+
+            // 최초 실행
+            showRandomBubble();
+            
+            // 4초마다 함수 실행
+            setInterval(showRandomBubble, 4000);
         })
 
-        let randomIndex = 0;
 
-        function showRandomBubble() {
-            $('.bubble').removeClass('show');
-
-            // 랜덤 인덱스
-            randomIndex = Math.floor(Math.random() * $('.bubble').length);
-        
-            $('.bubble').eq(randomIndex).addClass('show');
-
-            setTimeout(() => {
-                $('.bubble').eq(randomIndex).removeClass('show');
-            }, 2000)
-        }
-        
-        setInterval(showRandomBubble, 4000);
     </script>
 </body>
 </html>
