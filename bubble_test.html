@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<style>
+    #canvas {
+        width: 200px;
+        height: 300px;
+        margin: 0 auto;
+        position: relative;
+        background-color: aliceblue;
+    }
+
+    .bubble {
+        padding: 12px;
+        opacity: 0;
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        position: absolute;
+        border-radius: 4px;
+        position: relative;
+        background: #ffb3b3;
+    }
+
+    .bubble::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-left-color: #ffb3b3;
+        border-right: 0;
+        border-bottom: 0;
+        margin-top: -10px;
+        margin-right: -20px;
+    }
+
+    .bubble:nth-child(1) {
+        left: 20px;
+        top: 20px;
+    }
+
+    .bubble:nth-child(2) {
+        left: 40px;
+        top: 40px;
+    }
+
+    .bubble:nth-child(3) {
+        left: 60px;
+        top: 60px;
+    }
+
+    .bubble:nth-child(4) {
+        left: 20px;
+        top: 200px;
+    }
+
+    .bubble:nth-child(5) {
+        right: 20px;
+        top: 200px;
+    }
+
+    .bubble:nth-child(6) {
+        right: 20px;
+        top: 240px;
+    }
+
+    .bubble.show {
+        opacity: 1;
+    }
+</style>
+
+<body>
+    <div id="canvas">
+        <div id="bubble-wrap">
+            <div class="bubble show"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+    </div>
+
+    <script>
+        const response = [
+            '즐거운 하루',
+            '하루하루',
+            '빅뱅뱅',
+            '4번째 메시지',
+            '5번째 메세지',
+            '6번째째 메세지'
+        ]
+
+        $(document).ready(function(){
+            /* Data Fetching */
+            response.forEach((message, index) => {
+                $('#bubble-wrap .bubble').eq(index).text(message);
+            })
+        })
+
+        let randomIndex = 0;
+
+        function showRandomBubble() {
+            $('.bubble').removeClass('show');
+
+            // 랜덤 인덱스
+            randomIndex = Math.floor(Math.random() * $('.bubble').length);
+        
+            $('.bubble').eq(randomIndex).addClass('show');
+
+            setTimeout(() => {
+                $('.bubble').eq(randomIndex).removeClass('show');
+            }, 2000)
+        }
+        
+        setInterval(showRandomBubble, 4000);
+    </script>
+</body>
+</html>
