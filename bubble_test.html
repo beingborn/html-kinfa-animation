@@ -8,8 +8,15 @@
 </head>
 
 <style>
-    body {
+    body, p, ul {
         margin: 0;
+        padding: 0;
+    }
+
+    button {
+        background: transparent;
+        border: 0;
+        cursor: pointer;
     }
 
     #canvas {
@@ -33,9 +40,45 @@
     }
 
     .rwd-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
         flex-grow: 1;
-        margin: 0 16px;
-        align-content: end;
+        margin: 0 16px;    
+    }
+
+    .rwd-container .rwd_heart_up {
+        margin-top: 8px;
+        align-self: flex-start;
+        border-radius: 12px;
+        padding: 8px;
+        background-color: #fff;
+    }
+
+    progress {
+        width: 100%;
+    }
+
+    .rwd-footer-nav {
+        display: flex;
+        align-items: center;
+        overflow-x: auto;
+        gap: 8px;
+    }
+
+    .rwd-footer-nav > li > button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #eee;
+    }
+
+    .rwd-footer-inner {
+        padding: 20px;
     }
 
     .rwd-footer {
@@ -48,11 +91,11 @@
     }
 
     .tree-img-wrapper {
-        text-align: center;
         position: relative;
-        padding-bottom: 36px;
         margin-bottom: 12px;
-        max-width: 335px;
+        padding-bottom: 36px;
+        width: 335px;
+        text-align: center;
     }
 
     .tree-img-wrapper .tree {
@@ -73,10 +116,10 @@
 
     #bubble-wrap {
         position: absolute;
-        left: 20px;
+        left: 50%;
+        transform: translateX(-50%);
         top: 120px;
-        width: 100%;
-        height: 100%;
+        width: calc(100% - 40px);
     }
 
     .bubble {
@@ -110,37 +153,50 @@
         opacity: 1;
     }
 
+    ul, li {
+        list-style-type: none;
+    }
+
 </style>
 
 <body>
     <div id="canvas">
         <div class="rwd-header">
-            Reward Header
+            <a href="#">이전으로</a>
+            <div class="rwd-header-util">
+                <button type="button">보관함</button>
+                <button type="button">사진함</button>
+            </div>
         </div>
         <div class="rwd-container">
+            <button type="button" class="rwd_heart_up">하트 수 올리기</button>
             <div class="tree-img-wrapper">
                 <img src="./images/rwd_character.png" class="character" alt="포용이">
                 <img src="./images/rwd_tree_lv5.png" class="tree" alt="나무">
-                <img src="./images/rwd_sign.png" class="sign" alt="팻말">
+                <button type="button" class="sign">
+                    <img src="./images/rwd_sign.png" alt="팻말">
+                </button>
             </div>
             <div id="bubble-wrap">
+                <!-- <div class="bubble"></div>
                 <div class="bubble"></div>
                 <div class="bubble"></div>
                 <div class="bubble"></div>
                 <div class="bubble"></div>
-                <div class="bubble"></div>
-                <div class="bubble"></div>
+                <div class="bubble"></div> -->
             </div>
         </div>
         <div class="rwd-footer">
-            <p>행복에너지 70%</p>
-            <progress value="50" min="0" max="100"></progress>
-            <div>
-                <button>출석체크</button>
-                <button>잇다 조회하기</button>
-                <button>오늘의 행운뽑기</button>
-                <button>오늘의 퀴즈</button>
-                <button>이벤트 참여</button>
+            <div class="rwd-footer-inner">
+                <p>행복에너지 70%</p>
+                <progress value="50" min="0" max="100"></progress>
+                <ul class="rwd-footer-nav">
+                    <li><button>출석체크</button></li>
+                    <li><button>잇다<br/>조회하기</button></li>
+                    <li><button>오늘의 <br/>행운뽑기</button></li>
+                    <li><button>오늘의 <br/> 퀴즈</button></li>
+                    <li><button>이벤트<br/> 참여</button></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -156,9 +212,22 @@
         ]
 
         $(document).ready(function(){
+            /*
             response.forEach((message, index) => {
                 $('#bubble-wrap .bubble').eq(index).text(message);
             })
+            */
+
+            let html = "<ul>"
+
+            for (let i = 0; i < response.length; i++) {
+                html += `<li class="bubble">${response[i]}</li>`
+            }
+
+            html += "</ul>"
+
+            document.querySelector('#bubble-wrap').innerHTML += html;
+
 
             let prevIndex = 0;
             let randomIndex = 0;
