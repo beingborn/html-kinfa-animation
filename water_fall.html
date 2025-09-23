@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>보석 반짝이 효과</title>
+  <style>
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* 스파클 기본 */
+    .sparkle {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+      animation: sparkle 2s infinite ease-in-out;
+    }
+
+    /* 별모양처럼 보이게 가짜 팔 */
+    .sparkle::before,
+    .sparkle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 2px;
+      opacity: 0.8;
+    }
+
+    .sparkle::before {
+      width: 2px;
+      height: 40px;
+    }
+
+    .sparkle::after {
+      width: 40px;
+      height: 2px;
+    }
+
+    /* 여러 개 배치 */
+    .sparkle:nth-child(1) { top: 30%; left: 30%; animation-delay: 0s; }
+    .sparkle:nth-child(2) { top: 50%; left: 60%; animation-delay: 0.5s; transform: scale(0.6); }
+    .sparkle:nth-child(3) { top: 70%; left: 40%; animation-delay: 1s; transform: scale(0.8); }
+    .sparkle:nth-child(4) { top: 40%; left: 75%; animation-delay: 1.5s; transform: scale(0.5); }
+
+    /* 반짝이는 애니메이션 */
+    @keyframes sparkle {
+      0%, 100% {
+        transform: scale(0.3) rotate(0deg);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scale(1.2) rotate(45deg);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+</body>
+</html>
