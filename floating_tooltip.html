@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation | floating-tooltip</title>
+</head>
+
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    body, #canvas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #canvas {
+        width: 360px;
+        height: 720px;
+        border: 1px solid #eee;
+        position: relative;
+    }
+
+    .tooltip-wrap {
+        animation: floating 0.5s infinite alternate;
+        filter: drop-shadow(0 0 2px #00c0fa) drop-shadow(0 0 10px #2cc9f9);
+    }
+
+    .tooltip {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-size: 700;
+        border-radius: 8px;
+        color: #159ede;
+        background-color: #fff;
+    }
+
+    .tooltip::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        top: -8px;
+        border-style: solid;
+        border-width: 0 10px 10px 10px;
+        border-color: transparent transparent #fff transparent;
+        width: 0;
+        height: 0;
+    }
+
+    @keyframes floating {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(-8px);
+        }
+    }
+
+</style>
+
+<body>
+    
+    <div id="canvas">
+        <div class="tooltip-wrap">
+            <div class="tooltip">
+                Floating Tooltip
+            </div>
+        </div>
+    </div>
+</body>
+</html>

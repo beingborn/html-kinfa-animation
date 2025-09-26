@@ -2,7 +2,10 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Box Explosion Animation</title>
+    <title>animation | character-animation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <style>
     /* =========================
         Timeline (sec) — v1 (현재 코드 기준)
@@ -36,9 +39,7 @@
     */
 
         :root {
-            --mobile-viewport : 999px;
-
-            --item-duration : 0.5s;     /* 아이템 애니메이션 진행 시간 */
+            --item-duration : 0.5s;    /* 아이템 애니메이션 진행 시간 */
             --box-duration : 1s;      /* 박스 애니메이션 진행 시간 */
 
             --enter-delay : 3s;       /* 들어가는 모션 딜레이 */
@@ -46,6 +47,13 @@
             --explode-delay : 6s;     /* 나오는 모션 딜레이 */
             --character-delay1 : 1.5s;
             --character-delay2 : calc(var(--explode-delay) - 1.5s);
+
+            --item-explode-left-x : -240px;
+            --item-explode-right-x : 240px;
+
+            --item-explode-side-y : -560px;
+
+            --item-explode-middle-y : -680px;
         }
 
         body {
@@ -55,6 +63,10 @@
             margin: 0;
             height: 100vh;
             background: #fff;
+            
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
         }
 
         .wrapper {
@@ -64,10 +76,11 @@
         .character {
             width: 323px;
             height: 540px;
-            animation-duration: 0.5s, 0.5s;
-            animation-timing-function: ease, ease-in-out;
-            animation-delay: var(--character-delay1), var(--character-delay2);
-            animation-iteration-count: 2, 2;
+
+            animation-duration: 0.8s, 1s;
+            animation-timing-function: ease-out, ease-out;
+            animation-delay: 1s, calc(var(--explode-delay) - 0.5s);
+            animation-iteration-count: 5, 1;
             animation-fill-mode: forwards, forwards;
         }
 
@@ -75,11 +88,19 @@
             position: absolute;
             top: 50%;
             left: 50%;
+            width: 500px;
+            height: 300px;
 
             animation-duration: 0.5s;
             animation-timing-function: ease-in-out;
             animation-delay: var(--explode-delay);
             animation-fill-mode: forwards;
+
+            /* 
+                무한 반복일 시 Scale이 0으로 한번 초기화되어서 폭죽이 사라지는 현상 있음.
+                변경 원할 시 폭죽이 터지고 자연스럽게 사라지는 애니메이션이 추가되어야 할 듯함
+            */
+
             transform: translate(-50%, -50%) scale(0);
         }
 
@@ -90,6 +111,11 @@
             left : 50%;
             z-index: -1;
             transform: translateX(-50%);
+        }
+
+        .icon-inner img {
+            width: 70px;
+            height: 60px;
         }
 
         .icon-inner > [class^="icon"] {
@@ -116,7 +142,7 @@
             color : #da3b64;
 
             animation-delay: var(--enter-delay), var(--explode-delay);
-            transform: translate(-240px, -560px);
+            transform: translate(var(--item-explode-left-x), var(--item-explode-side-y));
         }
 
         /* 아이콘 > 고용 */
@@ -125,7 +151,7 @@
             color : #a25c04;
 
             animation-delay: calc(var(--enter-delay) + var(--enter-item-delay)), var(--explode-delay);
-            transform: translate(0, -680px);
+            transform: translate(0, var(--item-explode-middle-y));
         }
 
         /* 아이콘 > 복지 */
@@ -134,12 +160,12 @@
             color : #4134dd;
 
             animation-delay: calc(var(--enter-delay) + var(--enter-item-delay) * 2), var(--explode-delay);
-            transform: translate(240px, -560px);
+            transform: translate(var(--item-explode-right-x), var(--item-explode-side-y));
         }
 
         /* Animation Run */
         .run .character {
-            animation-name: bounce, bounce;
+            animation-name: bounce, explodeCharacter;
         }
 
         .run .fire-cracker {
@@ -160,12 +186,18 @@
 
         /* 캐릭터 바운스 */
         @keyframes bounce {
-            0%, 20%, 50%, 80% {transform: translateY(0) scale(0.95);}
-            40% {transform: translateY(-30px)}
-            60% {transform: translateY(-15px)}
-            100% {transform: translateY(0) scale(1);}
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
+            100% { transform: translateY(0px); }
         }
-        
+
+        @keyframes explodeCharacter {
+            0% { transform: scale(1)}
+            40% { transform: scale(0.9)}
+            60% { transform: scale(0.9)}
+            100% { transform: scale(1)}
+        }
+
         /* 폭죽 */
         @keyframes explodeFire {
             0% {
@@ -173,14 +205,14 @@
             }
 
             100% {
-                transform: translate(-50%, -50%) scale(1.2);
+                transform: translate(-50%, -50%) scale(1);
             }
         }
 
         /* 아이콘 */
         @keyframes enterLeft {
             0% {
-                transform: translate(-240px, -560px) scale(1);
+                transform: translate(var(--item-explode-left-x), var(--item-explode-side-y)) scale(1);
             }
 
             100% {
@@ -194,13 +226,13 @@
             }
 
             100% {
-                transform: translate(-240px, -560px) scale(1);
+                transform: translate(var(--item-explode-left-x), var(--item-explode-side-y)) scale(1);
             }
         }
 
         @keyframes enterMiddle {
             0% {
-                transform: translate(0, -680px) scale(1);
+                transform: translate(0, var(--item-explode-middle-y)) scale(1);
             }
             100% {
                 transform: translate(0, -20px) scale(0);
@@ -212,13 +244,13 @@
                 transform: translate(0, -20px) scale(0);
             }
             100% {
-                transform: translate(0, -680px) scale(1);
+                transform: translate(0, var(--item-explode-middle-y)) scale(1);
             }
         }
 
         @keyframes enterRight {
             0% {
-                transform: translate(240px, -560px) scale(1);
+                transform: translate(var(--item-explode-right-x), var(--item-explode-side-y)) scale(1);
             }
             100% {
                 transform: translate(0, 0) scale(0);
@@ -230,34 +262,67 @@
                 transform: translate(0, 0px) scale(0);
             }
             100% {
-                transform: translate(240px, -560px) scale(1);
+                transform: translate(var(--item-explode-right-x), var(--item-explode-side-y)) scale(1);
             }
         }
 
-        /* Media Query (Vw) */
+        @media (max-width : 999px) {
+            :root {
+                --item-explode-middle-y: calc(-680 / 999 * 100vw);
+                --item-explode-side-y: calc(-560 / 999 * 100vw);
+                --item-explode-left-x : calc(-240 / 999 * 100vw);
+                --item-explode-right-x : calc(240 / 999 * 100vw);
+            }
 
+            .character {
+                width: calc(323 / 999 * 100vw);  
+                height: calc(540 / 999 * 100vw); 
+            }
+
+            .icon-inner > [class^="icon"] {
+                width: calc(180 / 999 * 100vw);
+                height: calc(180 / 999 * 100vw);
+                min-width: 60px;
+                min-height: 60px;
+
+                /* 1. 최솟값 */
+                font-size: max(13px, calc((30 / 999) * 100vw)); 
+            }
+
+            .icon-inner img {
+                width: calc(70 / 999 * 100vw);
+                height : calc(60 / 999 * 100vw);
+                min-width: 30px;
+                min-height: 26px;
+            }
+
+            .fire-cracker {
+                width: calc(500 / 999 * 100vw);
+                height: calc(300 / 999 * 100vw);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="wrapper run">
-        <img class="fire-cracker" src="./firecracker.png" alt="폭죽">
-        <img class="character" src="./character.png" alt="포용이">
+        <img class="fire-cracker" src="./assets/images/firecracker.png" alt="폭죽">
+        <img class="character" src="./assets/images/character.png" alt="포용이">
         <div class="icon-wrapper">
             <div class="icon-inner">
                 <div class="icon1">
-                    <img src="./ico_finance.png" alt="금융" width="70" height="60">
+                    <img src="./assets/images/ico_finance.png" alt="금융">
                     금융
                 </div>
             </div>
             <div class="icon-inner">
                 <div class="icon2">
-                    <img src="./ico_employment.png" alt="고용" width="70" height="60">
+                    <img src="./assets/images/ico_employment.png" alt="고용">
                     고용
                 </div>
             </div>
             <div class="icon-inner">
                 <div class="icon3">
-                    <img src="./ico_welfare.png" alt="복지" width="70" height="60">
+                    <img src="./assets/images/ico_welfare.png" alt="복지">
                     복지
                 </div>
             </div>
@@ -276,15 +341,16 @@
         function playOnce() {
             animationRoot.classList.remove('run');
 
-            void animationRoot.offsetWidth; /* Reflow 강제 */
+            /* Reflow 강제 > DOM 인식 */
+            void animationRoot.offsetWidth; 
 
-            animationRoot.classList.add('run')
+            animationRoot.classList.add('run');
         }
 
         playOnce();
 
         /* 6.5초마다 반복 */
-        /* setInterval(playOnce, 6500) */ 
+        /* setInterval(playOnce, 6500); */ 
     </script>
 </body>
 </html>

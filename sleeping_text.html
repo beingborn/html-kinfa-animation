@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation | sleeping-text</title>
+</head>
+
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    body, #canvas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #canvas {
+        width: 360px;
+        height: 720px;
+        border: 1px solid #eee;
+        position: relative;
+    }
+
+    .zzz-txt {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px;
+        height: 76px;
+        background: url(./assets/images/text_cloud.svg) no-repeat center / cover;
+    }
+
+    .zzz-txt > span {
+        font-weight: bold;
+        transition: transform 0.3s ease-in-out;
+        animation-duration: 3.5s;
+        animation-iteration-count: infinite;
+        animation-fill-mode: forwards;
+    }
+
+    .zzz-txt > span:nth-child(1) {
+        font-size: 14px;
+        animation-name: zzzScale1;
+    }
+
+    .zzz-txt > span:nth-child(2) {
+        font-size: 16px;
+        animation-name: zzzScale2;
+        animation-delay: 0.5s;
+    }    
+
+    .zzz-txt > span:nth-child(3) {
+        font-size: 18px;
+        animation-name: zzzScale3;
+        animation-delay: 1s;
+    }    
+
+    @keyframes zzzScale1 {
+        0% {transform: scale(0);}
+        60% {transform: scale(1);}
+        100% {transform: scale(0);}
+    }
+    @keyframes zzzScale2 {
+        0% {transform: translateY(-8px) scale(0);}
+        60% {transform: translateY(-8px) scale(1);}
+        100% {transform: translateY(-8px) scale(0);}
+    }
+    @keyframes zzzScale3 {
+        0% {transform: translateY(-14px) scale(0);}
+        60% {transform: translateY(-14px) scale(1);}
+        100% {transform: translateY(-14px) scale(0);}
+    }
+</style>
+
+<body>
+    <div id="canvas">
+        <div class="zzz-txt">
+            <span>z</span>
+            <span>z</span>
+            <span>z</span>
+        </div>        
+    </div>
+</body>
+</html>
