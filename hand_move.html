@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation | handmove</title>
+</head>
+
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    body, #canvas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #canvas {
+        width: 360px;
+        height: 720px;
+        border: 1px solid #eee;
+        position: relative;
+    }
+
+    .gif-2x {
+        width: calc(110px / 2);
+        height: calc(150px / 2);
+    }
+    .gif-3x {
+        width: calc(110px / 3);
+        height: calc(150px / 3);
+    }
+    .gif-4x {
+        width: calc(110px / 4);
+        height: calc(150px / 4);
+    }
+</style>
+
+<body>
+    <div id="canvas">
+        <img class="gif-2x" src="./assets/images/hand_moving.gif" alt="클릭">
+        <img class="gif-3x" src="./assets/images/hand_moving.gif" alt="클릭">        
+        <img class="gif-4x" src="./assets/images/hand_moving.gif" alt="클릭">        
+    </div>
+</body>
+</html>
