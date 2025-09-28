@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>animation | phone ci roller</title>
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animation | phone ci roller</title>
+    <style>
     #canvas {
-      margin: 0 auto;
-      width: 1024px;
-      padding: 24px;
-      background-color: #FF82AB2B;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+        margin: 0 auto;
+        padding: 24px;
+        background-color: #FF82AB2B;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     h3 {
@@ -37,10 +36,11 @@
 
     .mockup {
         position: relative;
-        width: 800px;
+        width: 100%;
+        max-width: 800px;
         padding: 20px;
         text-align: center;
-        background-color: #FF82AB3B;
+        background-color: rgba(245, 172, 196, 0.231);
         border-radius: 20px;
         overflow: hidden;
     }
@@ -55,14 +55,18 @@
         position: absolute;
         top: 60px;
         z-index: 3;
-        animation-name: ciRoll;
+        
+        animation-name: ciRoll;        
+        
     }
 
     .ci-bottom {
         position: absolute;
         bottom: 60px;      
         z-index: 1;
+        
         animation-name: ciRoll;
+        
         animation-direction: reverse;
     }
 
@@ -94,51 +98,105 @@
         transform: translateY(-50%);
     }
 
-    @keyframes ciRoll {
-        0% {transform: translateX(calc(-100% - 48px) );}
-        100% {
-        transform: translateX( calc(100% + var(--width)))
-        ;}
+    .totWebContentBox {
+        overflow: hidden;
+        width: 100%;
+        max-width: 1100px;
+        margin: 60px auto;
+        border: 1px solid #d8dfe6;
+        border-radius: 24px;
+        box-sizing: content-box;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.06);
     }
-  </style>
+
+    .mock-bottom {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .mock-bottom > button {
+        background-color: #4382f0;
+        width: 280px;
+        height: 56px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+        border-radius: 12px;
+        border-color: transparent;
+    }
+
+    @media (max-width: 991px) {
+        [class^=ci-] > img {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    @keyframes ciRoll {
+        0% {transform: translateX(calc(-100% - 48px));}
+        100% {transform: translateX( calc(100% + var(--width)));}
+    }
+    </style>
 </head>
 <body>
-  <div id="canvas">
-    <h3>나에게 꼭! 맞는 100여개의 대출비교와 복합지원까지 한번에</h3>
+    <div class="totWebContentBox">
+        <div id="canvas">
+            <h3 style="font-weight: 400; text-align: center">
+                나에게 꼭! 맞는 100여개의 <br/>
+                <strong>대출비교</strong>와 
+                <strong>복합지원</strong>까지 한번에
+            </h3>
+            <div class="mockup">
+                <div class="ci-top">
+                    <div class="ci-inner">
+                        <img src="./assets/images/ico_ci_im.svg" alt="">
+                        <img src="./assets/images/ico_ci_jeju.svg" alt="">
+                        <img src="./assets/images/ico_ci_k.svg" alt="">
+                        <img src="./assets/images/ico_ci_kakao.svg" alt="">
+                        <img src="./assets/images/ico_ci_kb.svg" alt="">
+                        <img src="./assets/images/ico_ci_kdb.svg" alt="">  
+                    </div>        
+                </div>
 
-    <div class="mockup">
-        <div class="ci-top">
-            <div class="ci-inner">
-                <img src="./assets/images/ico_ci_im.svg" alt="">
-                <img src="./assets/images/ico_ci_jeju.svg" alt="">
-                <img src="./assets/images/ico_ci_k.svg" alt="">
-                <img src="./assets/images/ico_ci_kakao.svg" alt="">
-                <img src="./assets/images/ico_ci_kb.svg" alt="">
-                <img src="./assets/images/ico_ci_kdb.svg" alt="">  
-            </div>        
-        </div>
-        <img class="phone" src="./assets/images/phone_mockup.png" alt="phone">
+                <img class="phone" src="./assets/images/phone_mockup.png" alt="phone">
+                <img class="ci-text ci-1" src="./assets/images/ico_ci_text_01.svg" alt="">
+                <img class="ci-text ci-2" src="./assets/images/ico_ci_text_02.svg" alt="">
+                <img class="ci-text ci-3" src="./assets/images/ico_ci_text_03.svg" alt="">
 
-        <img class="ci-text ci-1" src="./assets/images/ico_ci_text_01.svg" alt="">
-        <img class="ci-text ci-2" src="./assets/images/ico_ci_text_02.svg" alt="">
-        <img class="ci-text ci-3" src="./assets/images/ico_ci_text_03.svg" alt="">
-
-        <div class="ci-bottom">
-            <div class="ci-inner">
-                <img src="./assets/images/ico_ci_keb.svg" alt="">
-                <img src="./assets/images/ico_ci_nh.svg" alt="">
-                <img src="./assets/images/ico_ci_sc.svg" alt="">
-                <img src="./assets/images/ico_ci_soohyup.svg" alt="">
-                <img src="./assets/images/ico_ci_toss.svg" alt="">
-                <img src="./assets/images/ico_ci_woori.svg" alt="">
+                <div class="ci-bottom">
+                    <div class="ci-inner">
+                        <img src="./assets/images/ico_ci_keb.svg" alt="">
+                        <img src="./assets/images/ico_ci_nh.svg" alt="">
+                        <img src="./assets/images/ico_ci_sc.svg" alt="">
+                        <img src="./assets/images/ico_ci_soohyup.svg" alt="">
+                        <img src="./assets/images/ico_ci_toss.svg" alt="">
+                        <img src="./assets/images/ico_ci_woori.svg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="mock-bottom">
+                <button type="button">잇다 시작하기</button>
             </div>
         </div>
     </div>
 
-  </div>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script>
-    $('.ci-top, .ci-bottom').css('--width', $('.ci-top .ci-inner').innerWidth() + 48 + 48 + 'px')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+
+    $(function() {
+        const breakpoint = 991;
+
+        function updateWidth() {
+            var $ciGroupWidth = $('.ci-top .ci-inner').innerWidth();
+            $('.ci-top, .ci-bottom').css('--width', $ciGroupWidth + 48 + 48 + 'px');
+        }
+
+        updateWidth();
+
+        $(window).resize(function() {
+            updateWidth();
+        });
+    });
 
     let topZ = 1;
     let bottomZ = 3;
@@ -147,16 +205,10 @@
         topZ = topZ === 1 ? 3 : 1;
         bottomZ = bottomZ === 3 ? 1 : 3;
 
-        console.log(topZ)
-        console.log(topZ)
-
         $('.ci-top').css('z-index', topZ);
         $('.ci-bottom').css('z-index', bottomZ);
     }, 10000);
-    // ...existing code...
 
-    
-
-  </script>
+    </script>
 </body>
 </html>
