@@ -63,10 +63,64 @@
       top: 100%;
       border-top: 43px solid #f4c542;
     }
+
+    :root {
+      --hex-width: 100px;
+      --hex-height: 50px;
+    }
+
+    .hex-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .hex3 {
+      width: var(--hex-width);
+      height: var(--hex-height);
+      background-color: pink;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hex3::before, .hex3::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 0;
+      border-left: var(--hex-height) solid transparent;
+      border-right: var(--hex-height) solid transparent;
+    }
+
+    .hex3::before {
+      bottom: 100%;
+      border-bottom: calc(var(--hex-height) / 2) solid pink; 
+    }
+    .hex3::after {
+      top: 100%;
+      border-top: calc(var(--hex-height) / 2) solid pink;
+    }
+
+    #test {
+      width: 0;
+      border: 50px solid #d94d4d;
+    }
   </style>
 </head>
 <body>
   <div class="hex">1<br>방문신청</div>
   <div class="hex2">2<br>콜센터</div>
+  <div class="hex-group">
+    <div class="hex3">3</div>
+    <div class="hex3">3</div>
+    <div class="hex3">3</div>
+  </div>
+  <div class="hex-group">
+    <div class="hex3">3</div>
+    <div class="hex3">3</div>
+    <div class="hex3">3</div>
+  </div>
+  <div id="test"></div>
 </body>
 </html>
